@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plans SYSTEM "http://www.matsim.org/files/dtd/plans_v4.dtd">
+<plans xml:lang="de-CH">
+<person id="101">
+	<plan>
+		<act type="home" x="233654.9835" y="2629751.867" end_time="07:30" />
+		<leg mode="car">
+		</leg>
+		<act type="work" x="236712.531978" y="2625169.84501" dur="5:10" />
+		<leg mode="car">
+		</leg>
+		<act type="work" x="229665.444149" y="2629620.96425" dur="03:30" />
+		<leg mode="car">
+		</leg>
+		<act type="home" x="233654.9835" y="2629751.867" />
+	</plan>
+</person>
+
+<person id="102">
+	<plan>
+		<act type="home" x="233608.5213" y="2629699.303" end_time="06:00" />
+		<leg mode="car">
+		</leg>
+		<act type="work" x="237526.094905" y="2631844.41608" dur="03:30" />
+		<leg mode="car">
+		</leg>
+		<act type="home" x="233608.5213" y="2629699.303" />
+	</plan>
+</person>
+
+<person id="103">
+	<plan>
+		<act type="home" x="233134.9511" y="2629602.623" end_time="08:00" />
+		<leg mode="car">
+		</leg>
+		<act type="work" x="238326.391406" y="2624866.5765" dur="02:30" />
+		<leg mode="car">
+		</leg>
+		<act type="home" x="233134.9511" y="2629602.623" />
+	</plan>
+</person>
+
+</plans>

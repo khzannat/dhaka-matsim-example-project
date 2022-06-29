@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE population SYSTEM "http://www.matsim.org/files/dtd/population_v6.dtd">
+
+<population>
+	<person id="101">
+		<attributes>
+                        <attribute name="microm:modeled:age" class="java.lang.Integer">30</attribute>
+                        <attribute name="microm:modeled:sex" class="java.lang.String">m</attribute>
+                        <attribute name="subpopulation" class="java.lang.String">employed</attribute>
+		</attributes>
+		<plan>
+			<activity type="home" x="233654.9835" y="2629751.867" end_time="07:30:00"/>
+			<leg mode="car"></leg>
+			<activity type="work" x="236096.3609" y="2631780.74" end_time="10:10:00"/>
+			<leg mode="car"></leg>
+			<activity type="home" x="233654.9835" y="2629751.867" end_time="14:30:00"/>
+			<leg mode="walk"></leg>
+			<activity type="work" x="237030.0192" y="2626231.124" end_time="18:20:00"/>
+			<leg mode="car"></leg>
+			<activity type="home" x="233654.9835" y="2629751.867"/>
+		</plan>
+	</person>
+	<person id="102">
+		<attributes>
+			<attribute name="microm:modeled:age" class="java.lang.Integer">33</attribute>
+			<attribute name="microm:modeled:sex" class="java.lang.String">f</attribute>
+			<attribute name="subpopulation" class="java.lang.String">unemployed</attribute>
+		</attributes>
+		<plan>
+			<activity type="home" x="233654.9835" y="2629751.867" end_time="08:30:00"/>
+			<leg mode="car"></leg>
+			<activity type="work" x="236096.3609" y="2631780.74" end_time="10:10:00"/>
+			<leg mode="car"></leg>
+			<activity type="home" x="233654.9835" y="2629751.867" end_time="14:30:00"/>
+			<leg mode="walk"></leg>
+			<activity type="work" x="237030.0192" y="2626231.124" end_time="18:20:00"/>
+			<leg mode="car"></leg>
+			<activity type="home" x="233654.9835" y="2629751.867"/>
+		</plan>
+	</person>
+
+</population>
