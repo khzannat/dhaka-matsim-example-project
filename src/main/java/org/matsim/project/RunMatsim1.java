@@ -48,9 +48,13 @@ public class RunMatsim1 {
 	//Base model
 
 	public static void main(String[] args) {
+		//Mode choice model used estimates from 2019 travel diary survey data
+		//Base model
+
+
 		Config config;
 		if (args == null || args.length == 0 || args[0] == null) {
-			config = ConfigUtils.loadConfig("D:\\PhD Research\\dhaka-matsim-example-project\\scenarios\\Input\\config.xml");
+			config = ConfigUtils.loadConfig("./config.xml");
 		} else {
 			config = ConfigUtils.loadConfig(args);
 		}
@@ -58,7 +62,14 @@ public class RunMatsim1 {
 
 		config.qsim().setTrafficDynamics(TrafficDynamics.kinematicWaves);
 		config.qsim().setSnapshotStyle(SnapshotStyle.kinematicWaves);
+		{
+			StrategyConfigGroup.StrategySettings stratSets = new StrategyConfigGroup.StrategySettings();
+			stratSets.setStrategyName(DefaultPlanStrategiesModule.DefaultStrategy.ChangeSingleTripMode);
+			stratSets.setWeight(0.1);
+			config.strategy().addStrategySettings(stratSets);
+			config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng", "walk", "bike", "motorbike"});
 
+		}
 		//routing parameter
 		{
 			PlansCalcRouteConfigGroup.ModeRoutingParams pars = new PlansCalcRouteConfigGroup.ModeRoutingParams("bus");
@@ -87,7 +98,6 @@ public class RunMatsim1 {
 			pars5.setBeelineDistanceFactor(1.3);
 			config.plansCalcRoute().addModeRoutingParams( pars5 );
 
-
 			config.plansCalcRoute().setNetworkModes(CollectionUtils.stringToSet( "car,cng,motorbike"));
 
 
@@ -96,46 +106,53 @@ public class RunMatsim1 {
 		//scoring parameter
 		{
 			PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
-			pars.setConstant(0);
+			pars.setConstant(3);
+			pars.setMarginalUtilityOfTraveling(-0.0134);
 			pars.setMonetaryDistanceRate(-0.00152);
 			config.planCalcScore().addModeParams(pars);
 
 			PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
-			pars1.setConstant(2.20936);
+			pars1.setConstant(2);
+			pars1.setMarginalUtilityOfTraveling(-0.0134);
 			pars1.setMonetaryDistanceRate(-0.01);
 			config.planCalcScore().addModeParams(pars1);
 
 			PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
-			pars2.setConstant(-1.16125);
+			pars2.setConstant(2);
+			pars2.setMarginalUtilityOfTraveling(-0.0134);
 			pars2.setMonetaryDistanceRate(-0.002);
 			config.planCalcScore().addModeParams(pars2);
 
 			PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
-			pars3.setConstant(-1.77241);
+			pars3.setConstant(-1.5);
+			pars3.setMarginalUtilityOfTraveling(-0.0134);
 			pars3.setMonetaryDistanceRate(-0.006);
 			config.planCalcScore().addModeParams(pars3);
 
 			PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
-			pars4.setConstant(3.37646);
-			pars4.setMonetaryDistanceRate(-0.009);
+			pars4.setConstant(0);
+			pars4.setMarginalUtilityOfDistance(-0.000125);
+			pars4.setMarginalUtilityOfTraveling(-0.0134);
 			config.planCalcScore().addModeParams(pars4);
 
 			PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
-			pars5.setConstant(-2.10017);
+			pars5.setConstant(0.5);
+			pars5.setMarginalUtilityOfTraveling(-0.0134);
 			pars5.setMonetaryDistanceRate(-0.008);
 			config.planCalcScore().addModeParams(pars5);
 
 			PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
-			pars6.setConstant(-1.98998);
-			pars6.setMonetaryDistanceRate(-0.009);
+			pars6.setConstant(0);
+			pars6.setMarginalUtilityOfTraveling(-0.0134);
+			pars6.setMarginalUtilityOfDistance(-0.0000759);
 			config.planCalcScore().addModeParams(pars6);
 
 			PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
-			pars7.setConstant(-1.27882);
+			pars7.setConstant(-2);
+			pars7.setMarginalUtilityOfTraveling(-0.0134);
 			pars7.setMonetaryDistanceRate(-0.006);
 			config.planCalcScore().addModeParams(pars7);
-
-
+			config.planCalcScore().setMarginalUtilityOfMoney(0.002);
 			config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);
 
 		}
