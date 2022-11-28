@@ -164,56 +164,56 @@ public class RunMatsim6 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.007);
+            pars.setMarginalUtilityOfTraveling(-0.0136);
             pars.setMonetaryDistanceRate(-0.00152);
             params1.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);//arc 3 20, arc 4 10
-            pars1.setMarginalUtilityOfTraveling(-0.007);
+            pars1.setMarginalUtilityOfTraveling(-0.0136);
             pars1.setMonetaryDistanceRate(-0.01);
             params1.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.007);
+            pars2.setMarginalUtilityOfTraveling(-0.0136);
             pars2.setMonetaryDistanceRate(-0.002);
             params1.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.007);
+            pars3.setMarginalUtilityOfTraveling(-0.0136);
             pars3.setMonetaryDistanceRate(-0.006);
             params1.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
             pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
-            pars4.setMarginalUtilityOfTraveling(-0.007);
+            pars4.setMarginalUtilityOfTraveling(-0.0136);
             params1.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);//arc 4
-            pars5.setMarginalUtilityOfTraveling(-0.007);
+            pars5.setMarginalUtilityOfTraveling(-0.0136);
             pars5.setMonetaryDistanceRate(-0.008);
             params1.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.007);
+            pars6.setMarginalUtilityOfTraveling(-0.0136);
             pars6.setMarginalUtilityOfDistance(-0.0000759);
             params1.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.007);
+            pars7.setMarginalUtilityOfTraveling(-0.0136);
             pars7.setMonetaryDistanceRate(-0.006);
             params1.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.007);
+            pars8.setMarginalUtilityOfTraveling(-0.0136);
             pars8.setMonetaryDistanceRate(-0.00152);
             params1.addModeParams( pars8 );
 
@@ -282,56 +282,56 @@ public class RunMatsim6 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.005);
+            pars.setMarginalUtilityOfTraveling(-0.0134);
             pars.setMonetaryDistanceRate(-0.00152);
             params2.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);
-            pars1.setMarginalUtilityOfTraveling(-0.005);
+            pars1.setMarginalUtilityOfTraveling(-0.0134);
             pars1.setMonetaryDistanceRate(-0.01);
             params2.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.005);
+            pars2.setMarginalUtilityOfTraveling(-0.0134);
             pars2.setMonetaryDistanceRate(-0.002);
             params2.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.005);
+            pars3.setMarginalUtilityOfTraveling(-0.0134);
             pars3.setMonetaryDistanceRate(-0.006);
             params2.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
             pars4.setMarginalUtilityOfDistance(-0.000125);
-            pars4.setMarginalUtilityOfTraveling(-0.005);
+            pars4.setMarginalUtilityOfTraveling(-0.0134);
             params2.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);
-            pars5.setMarginalUtilityOfTraveling(-0.005);
+            pars5.setMarginalUtilityOfTraveling(-0.0134);
             pars5.setMonetaryDistanceRate(-0.008);
             params2.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.005);
+            pars6.setMarginalUtilityOfTraveling(-0.0134);
             pars6.setMarginalUtilityOfDistance(-0.0000759);
             params2.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.005);
+            pars7.setMarginalUtilityOfTraveling(-0.0134);
             pars7.setMonetaryDistanceRate(-0.006);
             params2.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.005);
+            pars8.setMarginalUtilityOfTraveling(-0.0134);
             pars8.setMonetaryDistanceRate(-0.00152);
             params2.addModeParams( pars8 );
 
@@ -403,56 +403,56 @@ public class RunMatsim6 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.005);
+            pars.setMarginalUtilityOfTraveling(-0.0134);
             pars.setMonetaryDistanceRate(-0.00152);
             params3.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);//arc 3 20, arc 4 10
-            pars1.setMarginalUtilityOfTraveling(-0.005);
+            pars1.setMarginalUtilityOfTraveling(-0.0134);
             pars1.setMonetaryDistanceRate(-0.01);
             params3.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.005);
+            pars2.setMarginalUtilityOfTraveling(-0.0134);
             pars2.setMonetaryDistanceRate(-0.002);
             params3.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.005);
+            pars3.setMarginalUtilityOfTraveling(-0.0134);
             pars3.setMonetaryDistanceRate(-0.006);
             params3.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
             pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
-            pars4.setMarginalUtilityOfTraveling(-0.005);
+            pars4.setMarginalUtilityOfTraveling(-0.0134);
             params3.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);//arc 4
-            pars5.setMarginalUtilityOfTraveling(-0.005);
+            pars5.setMarginalUtilityOfTraveling(-0.0134);
             pars5.setMonetaryDistanceRate(-0.008);
             params3.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.005);
+            pars6.setMarginalUtilityOfTraveling(-0.0134);
             pars6.setMarginalUtilityOfDistance(-0.0000759);
             params3.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.005);
+            pars7.setMarginalUtilityOfTraveling(-0.0134);
             pars7.setMonetaryDistanceRate(-0.006);
             params3.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.005);
+            pars8.setMarginalUtilityOfTraveling(-0.0134);
             pars8.setMonetaryDistanceRate(-0.00152);
             params3.addModeParams( pars8 );
 
