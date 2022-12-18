@@ -39,14 +39,15 @@ public class RunMatsim6 {
             config.transit().setTransitScheduleFile("transit-Schedule.xml.gz");
             config.transit().setUseTransit(true);
             config.transit().setTransitModes(Set.of("pt"));
-            config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);//maximum beeline distance between stops that agents could transfer to by walking
+            //config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);//maximum beeline distance between stops that agents could transfer to by walking
             config.transitRouter().setSearchRadius(400);//the radius in which stop locations are searched, given a start or target coordinate
             config.transitRouter().setExtensionRadius(0);//step size to increase searchRadius if no stops are found
             config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng", "bike", "walk","motorbike","pt"});
             config.transit().setBoardingAcceptance(BoardingAcceptance.checkStopOnly);
-            config.planCalcScore().setMarginalUtilityOfMoney(0.002);
             config.planCalcScore().setBrainExpBeta(1);
             config.planCalcScore().setLearningRate(1);
+            config.strategy().setMaxAgentPlanMemorySize(5);
+            config.strategy().setFractionOfIterationsToDisableInnovation(0.8);
 
 
         }
@@ -54,6 +55,8 @@ public class RunMatsim6 {
             config.strategy().addStrategySettings( new StrategyConfigGroup.StrategySettings().setStrategyName( DefaultPlanStrategiesModule.DefaultStrategy.ChangeSingleTripMode ).setSubpopulation( "employed").setWeight(0.1 ) );
             config.strategy().addStrategySettings( new StrategyConfigGroup.StrategySettings().setStrategyName( DefaultPlanStrategiesModule.DefaultSelector.SelectExpBeta ).setSubpopulation("employed" ).setWeight(0.8 ) );
             config.strategy().addStrategySettings( new StrategyConfigGroup.StrategySettings().setStrategyName( DefaultPlanStrategiesModule.DefaultStrategy.ReRoute ).setSubpopulation( "employed").setWeight(0.1 ) );
+
+
         }
         {
             config.strategy().addStrategySettings( new StrategyConfigGroup.StrategySettings().setStrategyName( DefaultPlanStrategiesModule.DefaultStrategy.ChangeSingleTripMode ).setSubpopulation( "unemployed").setWeight(0.1 ) );
@@ -115,48 +118,49 @@ public class RunMatsim6 {
             actParams2.setActivityType( "work" );
             actParams2.setTypicalDuration(8);
             actParams2.setMinimalDuration(1);
-            actParams2.setOpeningTime(7);
-            actParams2.setClosingTime(22);
+            actParams2.setOpeningTime(7*3600);
+            actParams2.setClosingTime(22*3600);
             params1.addActivityParams( actParams2 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams3 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams3.setActivityType( "education" );
             actParams3.setTypicalDuration(5);
-            actParams3.setOpeningTime(8);
-            actParams3.setClosingTime(20);
+            actParams3.setOpeningTime(8*3600);
+            actParams3.setClosingTime(20*3600);
             params1.addActivityParams( actParams3 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams4 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams4.setActivityType( "shopping" );
             actParams4.setTypicalDuration(1);
-            actParams4.setOpeningTime(8);
-            actParams4.setClosingTime(22);
+            actParams4.setOpeningTime(8*3600);
+            actParams4.setClosingTime(22*3600);
             params1.addActivityParams( actParams4 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams5 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams5.setActivityType( "personal" );
             actParams5.setTypicalDuration(1);
-            actParams5.setOpeningTime(0);
-            actParams5.setClosingTime(24);
+            actParams5.setOpeningTime(0*3600);
+            actParams5.setClosingTime(24*3600);
             params1.addActivityParams( actParams5 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams6 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams6.setActivityType( "leisure" );
             actParams6.setTypicalDuration(1);
-            actParams6.setOpeningTime(7);
-            actParams6.setClosingTime(23);
+            actParams6.setOpeningTime(7*3600);
+            actParams6.setClosingTime(23*3600);
             params1.addActivityParams( actParams6 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams7 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams7.setActivityType( "other" );
             actParams7.setTypicalDuration(1);
-            actParams7.setOpeningTime(0);
-            actParams7.setClosingTime(24);
+            actParams7.setOpeningTime(0*3600);
+            actParams7.setClosingTime(24*3600);
             params1.addActivityParams( actParams7 );
             params1.setPerforming_utils_hr(6);
             params1.setMarginalUtlOfWaiting_utils_hr(0.0);
             params1.setLateArrival_utils_hr(-18);
             params1.setMarginalUtlOfWaitingPt_utils_hr(0.0);
+            params1.setMarginalUtilityOfMoney(0.002);
 
 
         }
@@ -164,56 +168,56 @@ public class RunMatsim6 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.0136);
+            pars.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars.setMonetaryDistanceRate(-0.00152);
             params1.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);//arc 3 20, arc 4 10
-            pars1.setMarginalUtilityOfTraveling(-0.0136);
+            pars1.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars1.setMonetaryDistanceRate(-0.01);
             params1.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.0136);
+            pars2.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars2.setMonetaryDistanceRate(-0.002);
             params1.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.0136);
+            pars3.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars3.setMonetaryDistanceRate(-0.006);
             params1.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
-            pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
-            pars4.setMarginalUtilityOfTraveling(-0.0136);
+            pars4.setMarginalUtilityOfDistance(-0.00012527);//for arc3 and arc 4 -0.001
+            pars4.setMarginalUtilityOfTraveling(-0.802-0.102640);
             params1.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);//arc 4
-            pars5.setMarginalUtilityOfTraveling(-0.0136);
+            pars5.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars5.setMonetaryDistanceRate(-0.008);
             params1.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.0136);
-            pars6.setMarginalUtilityOfDistance(-0.0000759);
+            pars6.setMarginalUtilityOfTraveling(-0.802-0.102640);
+            pars6.setMarginalUtilityOfDistance(-0.00007604);
             params1.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.0136);
+            pars7.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars7.setMonetaryDistanceRate(-0.006);
             params1.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.0136);
+            pars8.setMarginalUtilityOfTraveling(-0.802-0.102640);
             pars8.setMonetaryDistanceRate(-0.00152);
             params1.addModeParams( pars8 );
 
@@ -233,105 +237,107 @@ public class RunMatsim6 {
             actParams2.setActivityType( "work" );
             actParams2.setTypicalDuration(8);
             actParams2.setMinimalDuration(1);
-            actParams2.setOpeningTime(7);
-            actParams2.setClosingTime(22);
+            actParams2.setOpeningTime(7*3600);
+            actParams2.setClosingTime(22*3600);
             params2.addActivityParams( actParams2 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams3 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams3.setActivityType( "education" );
             actParams3.setTypicalDuration(5);
-            actParams3.setOpeningTime(8);
-            actParams3.setClosingTime(20);
+            actParams3.setOpeningTime(8*3600);
+            actParams3.setClosingTime(20*3600);
             params2.addActivityParams( actParams3 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams4 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams4.setActivityType( "shopping" );
             actParams4.setTypicalDuration(1);
-            actParams4.setOpeningTime(8);
-            actParams4.setClosingTime(22);
+            actParams4.setOpeningTime(8*3600);
+            actParams4.setClosingTime(22*3600);
             params2.addActivityParams( actParams4 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams5 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams5.setActivityType( "personal" );
             actParams5.setTypicalDuration(1);
             actParams5.setOpeningTime(0);
-            actParams5.setClosingTime(24);
+            actParams5.setClosingTime(24*3600);
             params2.addActivityParams( actParams5 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams6 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams6.setActivityType( "leisure" );
             actParams6.setTypicalDuration(1);
-            actParams6.setOpeningTime(7);
-            actParams6.setClosingTime(23);
+            actParams6.setOpeningTime(7*3600);
+            actParams6.setClosingTime(23*3600);
             params2.addActivityParams( actParams6 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams7 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams7.setActivityType( "other" );
             actParams7.setTypicalDuration(1);
             actParams7.setOpeningTime(0);
-            actParams7.setClosingTime(24);
+            actParams7.setClosingTime(24*3600);
             params2.addActivityParams( actParams7 );
             params2.setLateArrival_utils_hr(-18);
             params2.setEarlyDeparture_utils_hr(0);
             params2.setPerforming_utils_hr(6);
             params2.setMarginalUtlOfWaiting_utils_hr(0);
             params2.setMarginalUtlOfWaitingPt_utils_hr(0.0);
+            params2.setMarginalUtilityOfMoney(0.002);
+
 
 
         }
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.0134);
+            pars.setMarginalUtilityOfTraveling(-0.802);
             pars.setMonetaryDistanceRate(-0.00152);
             params2.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);
-            pars1.setMarginalUtilityOfTraveling(-0.0134);
+            pars1.setMarginalUtilityOfTraveling(-0.802);
             pars1.setMonetaryDistanceRate(-0.01);
             params2.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.0134);
+            pars2.setMarginalUtilityOfTraveling(-0.802);
             pars2.setMonetaryDistanceRate(-0.002);
             params2.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.0134);
+            pars3.setMarginalUtilityOfTraveling(-0.802);
             pars3.setMonetaryDistanceRate(-0.006);
             params2.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
-            pars4.setMarginalUtilityOfDistance(-0.000125);
-            pars4.setMarginalUtilityOfTraveling(-0.0134);
+            pars4.setMarginalUtilityOfDistance(-0.00012527);
+            pars4.setMarginalUtilityOfTraveling(-0.802);
             params2.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);
-            pars5.setMarginalUtilityOfTraveling(-0.0134);
+            pars5.setMarginalUtilityOfTraveling(-0.802);
             pars5.setMonetaryDistanceRate(-0.008);
             params2.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.0134);
-            pars6.setMarginalUtilityOfDistance(-0.0000759);
+            pars6.setMarginalUtilityOfTraveling(-0.802);
+            pars6.setMarginalUtilityOfDistance(-0.00007604);
             params2.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.0134);
+            pars7.setMarginalUtilityOfTraveling(-0.802);
             pars7.setMonetaryDistanceRate(-0.006);
             params2.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.0134);
+            pars8.setMarginalUtilityOfTraveling(-0.802);
             pars8.setMonetaryDistanceRate(-0.00152);
             params2.addModeParams( pars8 );
 
@@ -353,49 +359,50 @@ public class RunMatsim6 {
             actParams2.setActivityType( "work" );
             actParams2.setTypicalDuration(8);
             actParams2.setMinimalDuration(1);
-            actParams2.setOpeningTime(7);
-            actParams2.setClosingTime(22);
+            actParams2.setOpeningTime(7*3600);
+            actParams2.setClosingTime(22*3600);
             params3.addActivityParams( actParams2 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams3 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams3.setActivityType( "education" );
             actParams3.setTypicalDuration(5);
-            actParams3.setOpeningTime(8);
-            actParams3.setClosingTime(20);
+            actParams3.setOpeningTime(8*3600);
+            actParams3.setClosingTime(20*3600);
             params3.addActivityParams( actParams3 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams4 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams4.setActivityType( "shopping" );
             actParams4.setTypicalDuration(1);
-            actParams4.setOpeningTime(8);
-            actParams4.setClosingTime(22);
+            actParams4.setOpeningTime(8*3600);
+            actParams4.setClosingTime(22*3600);
             params3.addActivityParams( actParams4 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams5 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams5.setActivityType( "personal" );
             actParams5.setTypicalDuration(1);
             actParams5.setOpeningTime(0);
-            actParams5.setClosingTime(24);
+            actParams5.setClosingTime(24*3600);
             params3.addActivityParams( actParams5 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams6 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams6.setActivityType( "leisure" );
             actParams6.setTypicalDuration(1);
-            actParams6.setOpeningTime(7);
-            actParams6.setClosingTime(23);
+            actParams6.setOpeningTime(7*3600);
+            actParams6.setClosingTime(23*3600);
             params3.addActivityParams( actParams6 );
 
             PlanCalcScoreConfigGroup.ActivityParams actParams7 = new PlanCalcScoreConfigGroup.ActivityParams();
             actParams7.setActivityType( "other" );
             actParams7.setTypicalDuration(1);
             actParams7.setOpeningTime(0);
-            actParams7.setClosingTime(24);
+            actParams7.setClosingTime(24*3600);
             params3.addActivityParams( actParams7 );
             params3.setLateArrival_utils_hr(-18);
             params3.setEarlyDeparture_utils_hr(0);
             params3.setPerforming_utils_hr(6);
             params3.setMarginalUtlOfWaitingPt_utils_hr(0.0);
             params3.setMarginalUtlOfWaiting_utils_hr(0);
+            params3.setMarginalUtilityOfMoney(0.002);
 
 
 
@@ -403,56 +410,56 @@ public class RunMatsim6 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.0134);
+            pars.setMarginalUtilityOfTraveling(-0.802);
             pars.setMonetaryDistanceRate(-0.00152);
             params3.addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
-            pars1.setConstant(2);//arc 3 20, arc 4 10
-            pars1.setMarginalUtilityOfTraveling(-0.0134);
+            pars1.setConstant(2);
+            pars1.setMarginalUtilityOfTraveling(-0.802);
             pars1.setMonetaryDistanceRate(-0.01);
             params3.addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.0134);
+            pars2.setMarginalUtilityOfTraveling(-0.802);
             pars2.setMonetaryDistanceRate(-0.002);
             params3.addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.0134);
+            pars3.setMarginalUtilityOfTraveling(-0.802);
             pars3.setMonetaryDistanceRate(-0.006);
             params3.addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
-            pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
-            pars4.setMarginalUtilityOfTraveling(-0.0134);
+            pars4.setMarginalUtilityOfDistance(-0.00012527);
+            pars4.setMarginalUtilityOfTraveling(-0.802);
             params3.addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
             pars5.setConstant(0.5);//arc 4
-            pars5.setMarginalUtilityOfTraveling(-0.0134);
+            pars5.setMarginalUtilityOfTraveling(-0.802);
             pars5.setMonetaryDistanceRate(-0.008);
             params3.addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.0134);
-            pars6.setMarginalUtilityOfDistance(-0.0000759);
+            pars6.setMarginalUtilityOfTraveling(-0.802);
+            pars6.setMarginalUtilityOfDistance(-0.00007604);
             params3.addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.0134);
+            pars7.setMarginalUtilityOfTraveling(-0.802);
             pars7.setMonetaryDistanceRate(-0.006);
             params3.addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.0134);
+            pars8.setMarginalUtilityOfTraveling(-0.802);
             pars8.setMonetaryDistanceRate(-0.00152);
             params3.addModeParams( pars8 );
 

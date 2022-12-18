@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class RunMatsim5 {
     public static void main(String[] args) {
-        //Time and cost sensitivity at the base scenario with BRT and multimodla accessibility
+        //scenario 2B daily cost
 
         Config config;
         if (args == null || args.length == 0 || args[0] == null) {
@@ -32,6 +32,7 @@ public class RunMatsim5 {
             config = ConfigUtils.loadConfig(args);
         }
         config.controler().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
+
         config.qsim().setTrafficDynamics(QSimConfigGroup.TrafficDynamics.kinematicWaves);
         config.qsim().setSnapshotStyle(QSimConfigGroup.SnapshotStyle.kinematicWaves);
         {
@@ -45,7 +46,7 @@ public class RunMatsim5 {
             config.transit().setTransitScheduleFile("transit-Schedule.xml.gz");
             config.transit().setUseTransit(true);
             config.transit().setTransitModes(Set.of("pt"));
-            config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);//maximum beeline distance between stops that agents could transfer to by walking
+            //config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);//maximum beeline distance between stops that agents could transfer to by walking
             config.transitRouter().setSearchRadius(400);//the radius in which stop locations are searched, given a start or target coordinate
             config.transitRouter().setExtensionRadius(0);//step size to increase searchRadius if no stops are found
             config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng", "bike", "walk","motorbike","pt"});
@@ -60,8 +61,8 @@ public class RunMatsim5 {
 
 
             PlansCalcRouteConfigGroup.ModeRoutingParams pars1 = new PlansCalcRouteConfigGroup.ModeRoutingParams("rickshaw");
-            pars1.setTeleportedModeSpeed( 10/3.6 );
-            pars1.setBeelineDistanceFactor( 2.00 );
+            pars1.setTeleportedModeFreespeedLimit( 10/3.6 );
+            pars1.setTeleportedModeFreespeedFactor( 2.00 );
             config.plansCalcRoute().addModeRoutingParams( pars1 );
 
             PlansCalcRouteConfigGroup.ModeRoutingParams pars2 = new PlansCalcRouteConfigGroup.ModeRoutingParams("hh");
@@ -88,61 +89,62 @@ public class RunMatsim5 {
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
             pars.setConstant(3);
-            pars.setMarginalUtilityOfTraveling(-0.0134);
-            pars.setMonetaryDistanceRate(-0.00152);
+            pars.setMarginalUtilityOfTraveling(-0.802);//in hour
+            pars.setMonetaryDistanceRate(-0.00152);//in meter
             config.planCalcScore().addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
             pars1.setConstant(2);//arc 3 20, arc 4 10
-            pars1.setMarginalUtilityOfTraveling(-0.0134);
+            pars1.setMarginalUtilityOfTraveling(-0.802);
             pars1.setMonetaryDistanceRate(-0.01);
             config.planCalcScore().addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
             pars2.setConstant(2);
-            pars2.setMarginalUtilityOfTraveling(-0.0134);
+            pars2.setMarginalUtilityOfTraveling(-0.802);
             pars2.setMonetaryDistanceRate(-0.002);
             config.planCalcScore().addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
             pars3.setConstant(-1.5);
-            pars3.setMarginalUtilityOfTraveling(-0.0134);
+            pars3.setMarginalUtilityOfTraveling(-0.802);
             pars3.setMonetaryDistanceRate(-0.006);
             config.planCalcScore().addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
             pars4.setConstant(0);
-            pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
-            pars4.setMarginalUtilityOfTraveling(-0.0134);
+            pars4.setMarginalUtilityOfDistance(-0.00012527);//for arc3 and arc 4 -0.001
+            pars4.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
-            pars5.setConstant(0.5);
-            pars5.setMarginalUtilityOfTraveling(-0.0134);
+            pars5.setConstant(0.5);//arc 4
+            pars5.setMarginalUtilityOfTraveling(-0.802);
             pars5.setMonetaryDistanceRate(-0.008);
             config.planCalcScore().addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
             pars6.setConstant(0);
-            pars6.setMarginalUtilityOfTraveling(-0.0134);
-            pars6.setMarginalUtilityOfDistance(-0.0000759);
+            pars6.setMarginalUtilityOfTraveling(-0.802);
+            pars6.setMarginalUtilityOfDistance(-0.00007604);
             config.planCalcScore().addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
             pars7.setConstant(-2);
-            pars7.setMarginalUtilityOfTraveling(-0.0134);
+            pars7.setMarginalUtilityOfTraveling(-0.802);
             pars7.setMonetaryDistanceRate(-0.006);
             config.planCalcScore().addModeParams(pars7);
 
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
             pars8.setConstant(3);
-            pars8.setMarginalUtilityOfTraveling(-0.0134);
+            pars8.setMarginalUtilityOfTraveling(-0.802);
+            pars8.setDailyMonetaryConstant(-50);
             //pars8.setMonetaryDistanceRate(-0.00152);
-            pars8.setDailyMonetaryConstant(-30);
             config.planCalcScore().addModeParams( pars8 );
             config.planCalcScore().setMarginalUtilityOfMoney(0.002);
             config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);
+
         }
 
 
@@ -157,20 +159,7 @@ public class RunMatsim5 {
         paramSetWalk.setSearchExtensionRadius(0.1);
         srrConfig.addIntermodalAccessEgress(paramSetWalk);
 
-        SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet paramSetbike = new SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet();
-        paramSetbike.setMode(TransportMode.bike);
-        paramSetbike.setInitialSearchRadius(1000);
-        paramSetbike.setMaxRadius(2000);
-        paramSetbike.setSearchExtensionRadius(0.1);
-        srrConfig.addIntermodalAccessEgress(paramSetbike);
 
-        SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet paramSetRickshaw = new SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet();
-        paramSetRickshaw.setMode("rickshaw");
-        paramSetRickshaw.setInitialSearchRadius(4000);
-        paramSetRickshaw.setMaxRadius(6000);
-        paramSetRickshaw.setSearchExtensionRadius(0.1);
-        srrConfig.addIntermodalAccessEgress(paramSetRickshaw);
-        config.addModule(srrConfig);
 
         Scenario scenario = ScenarioUtils.loadScenario(config) ;
         for (Link link : scenario.getNetwork().getLinks().values()) {
@@ -187,7 +176,11 @@ public class RunMatsim5 {
                 allowedModes2.add("bus");
                 link.setAllowedModes( allowedModes2 );
             }
-
+            if (link.getFreespeed()<10){
+                Set allowedModes3 = new HashSet(link.getAllowedModes());
+                allowedModes3.add("rickshaw");
+                link.setAllowedModes( allowedModes3 );
+            }
 
 
             if(link.getLength()<=0)

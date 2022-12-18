@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class RunMatsim2 {
     public static void main(String[] args) {
-        //All else being equal agents are only time sensitive
+        //All else being equal agents are only time sensitive scenario 2A
 
         Config config;
         if (args == null || args.length == 0 || args[0] == null) {
@@ -46,7 +46,7 @@ public class RunMatsim2 {
             config.transit().setTransitScheduleFile("transit-Schedule.xml.gz");
             config.transit().setUseTransit(true);
             config.transit().setTransitModes(Set.of("pt"));
-            config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);
+            //config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);
             config.transitRouter().setSearchRadius(400);
             config.transitRouter().setExtensionRadius(0);
             config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng","walk", "bike", "motorbike","pt"});
@@ -88,39 +88,39 @@ public class RunMatsim2 {
         //scoring parameter
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
-            pars.setMarginalUtilityOfTraveling(-0.0134);
+            pars.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
-            pars1.setMarginalUtilityOfTraveling(-0.0134);
+            pars1.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
-            pars2.setMarginalUtilityOfTraveling(-0.0134);
+            pars2.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
-            pars3.setMarginalUtilityOfTraveling(-0.0134);
+            pars3.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
-            pars4.setMarginalUtilityOfTraveling(-0.0134);
+            pars4.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
-            pars5.setMarginalUtilityOfTraveling(-0.0134);
+            pars5.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
-            pars6.setMarginalUtilityOfTraveling(-0.0134);
+            pars6.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
-            pars7.setMarginalUtilityOfTraveling(-0.0134);
+            pars7.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars7);
 
             PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
-            pars8.setMarginalUtilityOfTraveling(-0.0134);
+            pars8.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams( pars8 );
 
             config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);

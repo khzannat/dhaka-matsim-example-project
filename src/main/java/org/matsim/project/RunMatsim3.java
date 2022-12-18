@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class RunMatsim3 {
     public static void main(String[] args) {
-        //All else being equal agents are cost sensititive
+        //scenario 2B
 
         Config config;
         if (args == null || args.length == 0 || args[0] == null) {
@@ -46,10 +46,10 @@ public class RunMatsim3 {
             config.transit().setTransitScheduleFile("transit-Schedule.xml.gz");
             config.transit().setUseTransit(true);
             config.transit().setTransitModes(Set.of("pt"));
-            config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);
-            config.transitRouter().setSearchRadius(400);
-            config.transitRouter().setExtensionRadius(0);
-            config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng","walk", "bike", "motorbike","pt"});
+            //config.transitRouter().setMaxBeelineWalkConnectionDistance(0.4);//maximum beeline distance between stops that agents could transfer to by walking
+            config.transitRouter().setSearchRadius(400);//the radius in which stop locations are searched, given a start or target coordinate
+            config.transitRouter().setExtensionRadius(0);//step size to increase searchRadius if no stops are found
+            config.changeMode().setModes(new String[]{"car", "bus", "rickshaw", "hh", "cng", "bike", "walk","motorbike","pt"});
             config.transit().setBoardingAcceptance(BoardingAcceptance.checkStopOnly);
         }
         //routing parameter
@@ -72,7 +72,7 @@ public class RunMatsim3 {
 
             PlansCalcRouteConfigGroup.ModeRoutingParams pars4 = new PlansCalcRouteConfigGroup.ModeRoutingParams("walk");
             pars4.setTeleportedModeSpeed( 3/3.6  );
-            //pars4.setBeelineDistanceFactor(1.4);
+            pars4.setBeelineDistanceFactor(1.4);
             config.plansCalcRoute().addModeRoutingParams( pars4 );
 
             PlansCalcRouteConfigGroup.ModeRoutingParams pars5 = new PlansCalcRouteConfigGroup.ModeRoutingParams("bike");
@@ -88,42 +88,63 @@ public class RunMatsim3 {
         //scoring parameter
         {
             PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
-            pars.setMonetaryDistanceRate(-0.00152);
+            pars.setConstant(3);
+            pars.setMarginalUtilityOfTraveling(-0.802);//in hour
+            pars.setMonetaryDistanceRate(-0.00152);//in meter
             config.planCalcScore().addModeParams(pars);
 
             PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
+            pars1.setConstant(2);//arc 3 20, arc 4 10
+            pars1.setMarginalUtilityOfTraveling(-0.802);
             pars1.setMonetaryDistanceRate(-0.01);
             config.planCalcScore().addModeParams(pars1);
 
             PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
+            pars2.setConstant(2);
+            pars2.setMarginalUtilityOfTraveling(-0.802);
             pars2.setMonetaryDistanceRate(-0.002);
             config.planCalcScore().addModeParams(pars2);
 
             PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
+            pars3.setConstant(-1.5);
+            pars3.setMarginalUtilityOfTraveling(-0.802);
             pars3.setMonetaryDistanceRate(-0.006);
             config.planCalcScore().addModeParams(pars3);
 
             PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
-            pars4.setMarginalUtilityOfDistance(-0.000125);//for arc3 and arc 4 -0.001
+            pars4.setConstant(0);
+            pars4.setMarginalUtilityOfDistance(-0.00012527);//for arc3 and arc 4 -0.001
+            pars4.setMarginalUtilityOfTraveling(-0.802);
             config.planCalcScore().addModeParams(pars4);
 
             PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
+            pars5.setConstant(0.5);//arc 4
+            pars5.setMarginalUtilityOfTraveling(-0.802);
             pars5.setMonetaryDistanceRate(-0.008);
             config.planCalcScore().addModeParams(pars5);
 
             PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
-            pars6.setMarginalUtilityOfDistance(-0.0000759);
+            pars6.setConstant(0);
+            pars6.setMarginalUtilityOfTraveling(-0.802);
+            pars6.setMarginalUtilityOfDistance(-0.00007604);
             config.planCalcScore().addModeParams(pars6);
 
             PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
+            pars7.setConstant(-2);
+            pars7.setMarginalUtilityOfTraveling(-0.802);
             pars7.setMonetaryDistanceRate(-0.006);
             config.planCalcScore().addModeParams(pars7);
 
-            PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
-            pars8.setMonetaryDistanceRate(-0.00152);
-            config.planCalcScore().addModeParams( pars8 );
 
+            PlanCalcScoreConfigGroup.ModeParams pars8 = new PlanCalcScoreConfigGroup.ModeParams( "pt" );
+            pars8.setConstant(3);
+            pars8.setMarginalUtilityOfTraveling(-0.802);
+            pars8.setDailyMonetaryConstant(-50);
+            //pars8.setMonetaryDistanceRate(-0.00152);
+            config.planCalcScore().addModeParams( pars8 );
+            config.planCalcScore().setMarginalUtilityOfMoney(0.002);
             config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);
+
         }
 
 
@@ -137,6 +158,7 @@ public class RunMatsim3 {
         paramSetWalk.setMaxRadius(1000);
         paramSetWalk.setSearchExtensionRadius(0.1);
         srrConfig.addIntermodalAccessEgress(paramSetWalk);
+
 
 
         Scenario scenario = ScenarioUtils.loadScenario(config) ;

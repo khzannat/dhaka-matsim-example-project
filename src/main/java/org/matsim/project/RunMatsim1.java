@@ -45,7 +45,6 @@ import java.util.Set;
  *
  */
 public class RunMatsim1 {
-	//Base model
 
 	public static void main(String[] args) {
 		//Mode choice model used estimates from 2019 travel diary survey data
@@ -107,52 +106,52 @@ public class RunMatsim1 {
 		{
 			PlanCalcScoreConfigGroup.ModeParams pars = new PlanCalcScoreConfigGroup.ModeParams("bus");
 			pars.setConstant(3);
-			pars.setMarginalUtilityOfTraveling(-0.0134);
-			pars.setMonetaryDistanceRate(-0.00152);
+			pars.setMarginalUtilityOfTraveling(-0.802);//in hour
+			pars.setMonetaryDistanceRate(-0.00152);//in meter
 			config.planCalcScore().addModeParams(pars);
 
 			PlanCalcScoreConfigGroup.ModeParams pars1 = new PlanCalcScoreConfigGroup.ModeParams("rickshaw");
-			pars1.setConstant(2);
-			pars1.setMarginalUtilityOfTraveling(-0.0134);
+			pars1.setConstant(2);//arc 3 20, arc 4 10
+			pars1.setMarginalUtilityOfTraveling(-0.802);
 			pars1.setMonetaryDistanceRate(-0.01);
 			config.planCalcScore().addModeParams(pars1);
 
 			PlanCalcScoreConfigGroup.ModeParams pars2 = new PlanCalcScoreConfigGroup.ModeParams("hh");
 			pars2.setConstant(2);
-			pars2.setMarginalUtilityOfTraveling(-0.0134);
+			pars2.setMarginalUtilityOfTraveling(-0.802);
 			pars2.setMonetaryDistanceRate(-0.002);
 			config.planCalcScore().addModeParams(pars2);
 
 			PlanCalcScoreConfigGroup.ModeParams pars3 = new PlanCalcScoreConfigGroup.ModeParams("cng");
 			pars3.setConstant(-1.5);
-			pars3.setMarginalUtilityOfTraveling(-0.0134);
+			pars3.setMarginalUtilityOfTraveling(-0.802);
 			pars3.setMonetaryDistanceRate(-0.006);
 			config.planCalcScore().addModeParams(pars3);
 
 			PlanCalcScoreConfigGroup.ModeParams pars4 = new PlanCalcScoreConfigGroup.ModeParams("walk");
 			pars4.setConstant(0);
-			pars4.setMarginalUtilityOfDistance(-0.000125);
-			pars4.setMarginalUtilityOfTraveling(-0.0134);
+			pars4.setMarginalUtilityOfDistance(-0.00012527);//for arc3 and arc 4 -0.001
+			pars4.setMarginalUtilityOfTraveling(-0.802);
 			config.planCalcScore().addModeParams(pars4);
 
 			PlanCalcScoreConfigGroup.ModeParams pars5 = new PlanCalcScoreConfigGroup.ModeParams("car");
-			pars5.setConstant(0.5);
-			pars5.setMarginalUtilityOfTraveling(-0.0134);
+			pars5.setConstant(0.5);//arc 4
+			pars5.setMarginalUtilityOfTraveling(-0.802);
 			pars5.setMonetaryDistanceRate(-0.008);
 			config.planCalcScore().addModeParams(pars5);
 
 			PlanCalcScoreConfigGroup.ModeParams pars6 = new PlanCalcScoreConfigGroup.ModeParams("bike");
 			pars6.setConstant(0);
-			pars6.setMarginalUtilityOfTraveling(-0.0134);
-			pars6.setMarginalUtilityOfDistance(-0.0000759);
+			pars6.setMarginalUtilityOfTraveling(-0.802);
+			pars6.setMarginalUtilityOfDistance(-0.00007604);
 			config.planCalcScore().addModeParams(pars6);
 
 			PlanCalcScoreConfigGroup.ModeParams pars7 = new PlanCalcScoreConfigGroup.ModeParams("motorbike");
 			pars7.setConstant(-2);
-			pars7.setMarginalUtilityOfTraveling(-0.0134);
+			pars7.setMarginalUtilityOfTraveling(-0.802);
 			pars7.setMonetaryDistanceRate(-0.006);
 			config.planCalcScore().addModeParams(pars7);
-			config.planCalcScore().setMarginalUtilityOfMoney(0.002);
+			config.planCalcScore().setMarginalUtilityOfMoney(0.002);//in bdt
 			config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);
 
 		}
